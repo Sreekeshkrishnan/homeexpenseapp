@@ -57,8 +57,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff020617),
-
-      /// 🔥 PREMIUM APPBAR
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(85),
         child: SafeArea(
@@ -109,8 +107,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
           children: [
 
             const SizedBox(height: 10),
-
-            /// 🔥 FORM CARD
             Container(
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(22),
@@ -126,8 +122,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
               ),
               child: Column(
                 children: [
-
-                  /// TITLE
                   TextField(
                     controller: titleController,
                     style: const TextStyle(color: Colors.white),
@@ -143,8 +137,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                   ),
 
                   const SizedBox(height: 15),
-
-                  /// AMOUNT
                   TextField(
                     controller: amountController,
                     keyboardType: TextInputType.number,
@@ -160,10 +152,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
-
                   const SizedBox(height: 18),
-
-                  /// CATEGORY
                   DropdownButtonFormField(
                     dropdownColor: const Color(0xff0f172a),
                     value: category,
@@ -181,10 +170,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
-
                   const SizedBox(height: 18),
-
-                  /// TYPE
                   DropdownButtonFormField(
                     dropdownColor: const Color(0xff0f172a),
                     value: type,
@@ -205,8 +191,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                   ),
 
                   const SizedBox(height: 18),
-
-                  /// DATE PICKER
                   Row(
                     children: [
                       Text(DateFormat('dd MMM yyyy').format(selectedDate),
@@ -235,8 +219,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                   ),
 
                   const SizedBox(height: 30),
-
-                  /// UPDATE BUTTON
                   SizedBox(
                     width: double.infinity,
                     height: 55,
