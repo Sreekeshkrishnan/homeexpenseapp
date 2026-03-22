@@ -5,43 +5,34 @@ import 'profile_page.dart';
 
 class MainNavigation extends StatefulWidget {
   final Map<String, dynamic> user;
-
   const MainNavigation({
     super.key,
     required this.user,
   });
-
   @override
   State<MainNavigation> createState() => _MainNavigationState();
 }
-
 class _MainNavigationState extends State<MainNavigation> {
-
   int selectedIndex = 0;
   late List<Widget> pages;
-
   @override
   void initState() {
     super.initState();
-
     pages = [
       HomePage(user: widget.user),
       ReportPage(),
       ProfilePage(user: widget.user),
     ];
   }
-
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[selectedIndex],
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.green,
