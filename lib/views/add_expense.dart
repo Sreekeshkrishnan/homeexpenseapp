@@ -53,8 +53,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff020617),
-
-      /// 🔥 PREMIUM APPBAR
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(85),
         child: SafeArea(
@@ -103,8 +101,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
-            /// 🔥 ANIMATION HEADER
             Container(
               height: 170,
               width: double.infinity,
@@ -127,8 +123,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
             ),
 
             const SizedBox(height: 20),
-
-            /// 🔥 FORM CARD
             Container(
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(22),
@@ -144,8 +138,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
               ),
               child: Column(
                 children: [
-
-                  /// TITLE
                   TextField(
                     controller: titleController,
                     style: const TextStyle(color: Colors.white),
@@ -161,8 +153,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   ),
 
                   const SizedBox(height: 15),
-
-                  /// AMOUNT
                   TextField(
                     controller: amountController,
                     keyboardType: TextInputType.number,
@@ -178,10 +168,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
-
                   const SizedBox(height: 18),
-
-                  /// TYPE SELECT
                   Row(
                     children: [
                       Expanded(
@@ -211,10 +198,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 18),
-
-                  /// CATEGORY
                   DropdownButtonFormField(
                     dropdownColor: const Color(0xff0f172a),
                     value: category,
@@ -234,8 +218,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   ),
 
                   const SizedBox(height: 18),
-
-                  /// DATE PICKER
                   Row(
                     children: [
                       Text(DateFormat('dd MMM yyyy').format(selectedDate),
@@ -264,8 +246,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   ),
 
                   const SizedBox(height: 30),
-
-                  /// SAVE BUTTON
                   SizedBox(
                     width: double.infinity,
                     height: 55,
