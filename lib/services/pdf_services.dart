@@ -11,16 +11,12 @@ class PdfService {
     required double balance,
     required String title,
   }) async {
-
     final pdf = pw.Document();
-
-    /// ✅ Load Unicode Font (₹ support)
     final font = pw.Font.ttf(
       await rootBundle.load(
         "assets/fonts/NotoSans-Regular.ttf",
       ),
     );
-
     pdf.addPage(
       pw.Page(
         margin: const pw.EdgeInsets.all(30),
@@ -31,8 +27,6 @@ class PdfService {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-
-                /// HEADER
                 pw.Container(
                   padding: const pw.EdgeInsets.all(16),
                   decoration: pw.BoxDecoration(
@@ -65,8 +59,6 @@ class PdfService {
                 ),
 
                 pw.SizedBox(height: 25),
-
-                /// SUMMARY CARDS
                 pw.Row(
                   mainAxisAlignment:
                   pw.MainAxisAlignment.spaceBetween,
@@ -133,8 +125,6 @@ class PdfService {
 
     return pdf;
   }
-
-  /// SUMMARY BOX
   static pw.Widget _summaryBox(
       String title,
       double amount,
