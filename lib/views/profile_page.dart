@@ -27,27 +27,19 @@ class _ProfilePageState extends State<ProfilePage> {
     imagePath = widget.user['image'] ?? "";
     userId = widget.user['id'];
   }
-
-  /// ✅ PICK PROFILE IMAGE
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final XFile? picked =
     await picker.pickImage(source: ImageSource.gallery);
-
     if (picked != null) {
-
       await DatabaseService()
           .updateProfileImage(userId, picked.path);
-
       setState(() {
         imagePath = picked.path;
       });
-
       Navigator.pop(context, true);
     }
   }
-
-  /// ✅ LOGOUT (FIXED)
   void logout() async {
     await DatabaseService().logout();   // 🔥 ONLY CHANGE
 
@@ -57,12 +49,9 @@ class _ProfilePageState extends State<ProfilePage> {
           (route) => false,
     );
   }
-
-  /// ✅ EDIT NAME
   void editName() {
     TextEditingController controller =
     TextEditingController(text: name);
-
     showDialog(
         context: context,
         builder: (_) {
@@ -75,14 +64,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: const Text("Cancel")),
               ElevatedButton(
                   onPressed: () async {
-
                     await DatabaseService()
                         .updateUserName(userId, controller.text);
-
                     setState(() {
                       name = controller.text;
                     });
-
                     Navigator.pop(context);
                     Navigator.pop(context, true);
                   },
@@ -91,11 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         });
   }
-
-  /// ✅ CHANGE PASSWORD
   void changePassword() {
     TextEditingController controller = TextEditingController();
-
     showDialog(
         context: context,
         builder: (_) {
@@ -108,13 +91,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: const Text("Cancel")),
               ElevatedButton(
                   onPressed: () async {
-
                     await DatabaseService()
                         .updateUserPassword(userId, controller.text);
-
                     Navigator.pop(context);
                     Navigator.pop(context, true);
-
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text("Password Updated")));
@@ -129,24 +109,18 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff020617),
-
       appBar: AppBar(
         title: const Text("Profile"),
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-
             const SizedBox(height: 20),
-
-            /// PROFILE IMAGE
             Stack(
               children: [
-
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: Colors.green,
@@ -158,7 +132,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       size: 60, color: Colors.white)
                       : null,
                 ),
-
                 Positioned(
                   bottom: 0,
                   right: 0,
@@ -176,22 +149,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
               ],
             ),
-
             const SizedBox(height: 15),
-
             Text(name,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold)),
-
             const SizedBox(height: 5),
-
             Text(email,
                 style: const TextStyle(color: Colors.white54)),
-
             const SizedBox(height: 30),
-
             buildTile(Icons.edit, "Edit Name", editName),
             buildTile(Icons.lock, "Change Password", changePassword),
             buildTile(Icons.logout, "Logout", logout,
@@ -201,7 +168,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
   Widget buildTile(IconData icon, String title, VoidCallback tap,
       {Color color = Colors.white}) {
     return Card(
