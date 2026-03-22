@@ -17,40 +17,29 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   bool loading = false;
   bool hidePass = true;
-
-  /// 🔥 LOGIN FUNCTION
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() => loading = true);
-
     var user = await DatabaseService().loginUser(
       emailController.text.trim(),
       passwordController.text.trim(),
     );
-
     if (user != null) {
-
-      /// 🔥 GO TO MAIN NAVIGATION
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (_) => MainNavigation(user: user),
         ),
       );
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Invalid email or password")),
       );
     }
-
     setState(() => loading = false);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +51,7 @@ class _LoginPageState extends State<LoginPage> {
             key: _formKey,
             child: Column(
               children: [
-
                 const SizedBox(height: 80),
-
                 Container(
                   padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
@@ -80,20 +67,15 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Icon(Icons.account_balance_wallet,
                       color: Colors.white, size: 40),
                 ),
-
                 const SizedBox(height: 25),
-
                 const Text("Welcome",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 26,
                         fontWeight: FontWeight.bold)),
-
                 const SizedBox(height: 40),
-
                 buildField("Email", emailController, icon: Icons.email),
                 const SizedBox(height: 15),
-
                 TextFormField(
                   controller: passwordController,
                   obscureText: hidePass,
@@ -121,13 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 10),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     TextButton(
                       onPressed: (){
                         Navigator.push(context,
@@ -136,7 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text("Forgot Password?",
                           style: TextStyle(color: Colors.white70)),
                     ),
-
                     TextButton(
                       onPressed: (){
                         Navigator.push(context,
@@ -147,9 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 20),
-
                 SizedBox(
                   width: double.infinity,
                   height: 55,
@@ -165,9 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(fontSize: 18)),
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -192,7 +166,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
   Widget buildField(String label, TextEditingController controller,
       {IconData? icon}) {
     return TextFormField(
