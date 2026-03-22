@@ -13,63 +13,48 @@ class ReportPage extends StatefulWidget {
 
 class _ReportPageState extends State<ReportPage>
     with SingleTickerProviderStateMixin {
-
   late TabController tabController;
-
   double income = 0;
   double expense = 0;
   double balance = 0;
-
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 4, vsync: this);
     loadData("day");
-
     tabController.addListener(() {
       if (tabController.indexIsChanging) return;
-
       if (tabController.index == 0) loadData("day");
       if (tabController.index == 1) loadData("week");
       if (tabController.index == 2) loadData("month");
       if (tabController.index == 3) loadData("year");
     });
   }
-
   Future<void> loadData(String type) async {
     final data = await DatabaseService().getExpenses();
-
     double inc = 0;
     double exp = 0;
-
     DateTime now = DateTime.now();
-
     for (var e in data) {
       DateTime d = DateTime.parse(e.date);
-
       bool include = false;
-
       if (type == "day") {
         include = d.day == now.day &&
             d.month == now.month &&
             d.year == now.year;
       }
-
       if (type == "week") {
         DateTime weekStart =
         now.subtract(Duration(days: now.weekday - 1));
         include =
             d.isAfter(weekStart.subtract(const Duration(days: 1)));
       }
-
       if (type == "month") {
         include = d.month == now.month && d.year == now.year;
       }
-
       if (type == "year") {
         include = d.year == now.year;
       }
-
       if (include) {
         if (e.type == "income") {
           inc += e.amount;
@@ -78,34 +63,27 @@ class _ReportPageState extends State<ReportPage>
         }
       }
     }
-
     setState(() {
       income = inc;
       expense = exp;
       balance = inc - exp;
     });
   }
-
-  /// ✅ PDF EXPORT (ADDED ONLY)
   void exportPdf() async {
     String period = "Day";
-
     if (tabController.index == 1) period = "Week";
     if (tabController.index == 2) period = "Month";
     if (tabController.index == 3) period = "Year";
-
     final pdf = await PdfService.generateReport(
       period: period,
       income: income,
       expense: expense,
       balance: balance, title: '',
     );
-
     await Printing.layoutPdf(
       onLayout: (format) async => pdf.save(),
     );
   }
-
   Widget infoCard(String title, double amount, Color color){
     return Container(
       padding: const EdgeInsets.all(18),
@@ -136,7 +114,6 @@ class _ReportPageState extends State<ReportPage>
       ),
     );
   }
-
   Widget buildChart(){
     return SizedBox(
       height: 240,
@@ -165,7 +142,6 @@ class _ReportPageState extends State<ReportPage>
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,13 +169,11 @@ class _ReportPageState extends State<ReportPage>
           ],
         ),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-
               Row(
                 children: [
                   Expanded(child: infoCard("Income", income, const Color(0xff16a34a))),
@@ -207,13 +181,9 @@ class _ReportPageState extends State<ReportPage>
                   Expanded(child: infoCard("Expense", expense, const Color(0xffdc2626))),
                 ],
               ),
-
               const SizedBox(height: 15),
-
               infoCard("Balance", balance, const Color(0xff7c3aed)),
-
               const SizedBox(height: 30),
-
               const Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Income vs Expense",
@@ -221,9 +191,7 @@ class _ReportPageState extends State<ReportPage>
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold))),
-
               const SizedBox(height: 15),
-
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
@@ -232,10 +200,7 @@ class _ReportPageState extends State<ReportPage>
                 ),
                 child: buildChart(),
               ),
-
               const SizedBox(height: 25),
-
-              /// ✅ PDF BUTTON (ADDED ONLY)
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -248,7 +213,6 @@ class _ReportPageState extends State<ReportPage>
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
             ],
           ),
