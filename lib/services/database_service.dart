@@ -6,19 +6,11 @@ import '../models/expense_model.dart';
 
 class DatabaseService {
   static Database? _db;
-
-  /// ============================================================
-  /// DATABASE INSTANCE
-  /// ============================================================
   Future<Database> get database async {
     if (_db != null) return _db!;
     _db = await initDb();
     return _db!;
   }
-
-  /// ============================================================
-  /// INIT DATABASE (WITH user_id)
-  /// ============================================================
   Future<Database> initDb() async {
     String path = join(await getDatabasesPath(), "expense.db");
 
@@ -40,10 +32,6 @@ class DatabaseService {
       },
     );
   }
-
-  // ============================================================
-  // 🔐 REGISTER USER
-  // ============================================================
   Future<bool> registerUser(
       String name,
       String email,
@@ -76,10 +64,6 @@ class DatabaseService {
 
     return true;
   }
-
-  // ============================================================
-  // 🔐 LOGIN USER
-  // ============================================================
   Future<Map<String, dynamic>?> loginUser(
       String email, String password) async {
 
@@ -102,10 +86,6 @@ class DatabaseService {
 
     return null;
   }
-
-  // ============================================================
-  // 👤 GET LOGGED USER
-  // ============================================================
   Future<Map<String, dynamic>?> getLoggedUser() async {
     final prefs = await SharedPreferences.getInstance();
     String? data = prefs.getString("loggedUser");
@@ -115,18 +95,10 @@ class DatabaseService {
     }
     return null;
   }
-
-  // ============================================================
-  // 🚪 LOGOUT
-  // ============================================================
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove("loggedUser");
   }
-
-  // ============================================================
-  // 🖼 UPDATE PROFILE IMAGE
-  // ============================================================
   Future<void> updateProfileImage(int id, String imagePath) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> users = prefs.getStringList("users") ?? [];
@@ -144,10 +116,6 @@ class DatabaseService {
 
     await prefs.setStringList("users", users);
   }
-
-  // ============================================================
-  // ✏ UPDATE USER NAME
-  // ============================================================
   Future<void> updateUserName(int id, String name) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> users = prefs.getStringList("users") ?? [];
@@ -165,10 +133,6 @@ class DatabaseService {
 
     await prefs.setStringList("users", users);
   }
-
-  // ============================================================
-  // 🔑 UPDATE PASSWORD
-  // ============================================================
   Future<void> updateUserPassword(int id, String password) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> users = prefs.getStringList("users") ?? [];
@@ -186,10 +150,6 @@ class DatabaseService {
 
     await prefs.setStringList("users", users);
   }
-
-  // ============================================================
-  // 🔍 FIND EMAIL BY NAME
-  // ============================================================
   Future<Map<String, dynamic>?> findEmailByName(String name) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> users = prefs.getStringList("users") ?? [];
@@ -207,10 +167,6 @@ class DatabaseService {
     }
     return null;
   }
-
-  // ============================================================
-  // 🔑 RESET PASSWORD
-  // ============================================================
   Future<int> resetPassword(String email, String newPassword) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> users = prefs.getStringList("users") ?? [];
@@ -244,10 +200,6 @@ class DatabaseService {
 
     return 0;
   }
-
-  // ============================================================
-  // 💰 INSERT EXPENSE
-  // ============================================================
   Future<int> insertExpense(Expense expense) async {
     final db = await database;
     final loggedUser = await getLoggedUser();
@@ -257,10 +209,6 @@ class DatabaseService {
       "user_id": loggedUser!["id"],
     });
   }
-
-  // ============================================================
-  // 📋 GET EXPENSES
-  // ============================================================
   Future<List<Expense>> getExpenses() async {
     final db = await database;
     final loggedUser = await getLoggedUser();
@@ -274,10 +222,6 @@ class DatabaseService {
 
     return res.map((e) => Expense.fromMap(e)).toList();
   }
-
-  // ============================================================
-  // ❌ DELETE EXPENSE
-  // ============================================================
   Future<int> deleteExpense(int id) async {
     final db = await database;
     final loggedUser = await getLoggedUser();
@@ -288,10 +232,6 @@ class DatabaseService {
       whereArgs: [id, loggedUser!["id"]],
     );
   }
-
-  // ============================================================
-  // 🔄 UPDATE EXPENSE
-  // ============================================================
   Future<int> updateExpense(Expense expense) async {
     final db = await database;
     final loggedUser = await getLoggedUser();
