@@ -27,18 +27,14 @@ class _HomePageState extends State<HomePage>
   double balance = 0;
 
   TextEditingController searchController = TextEditingController();
-
   late AnimationController controller;
   late Animation<double> animation;
-
   @override
   void initState() {
     super.initState();
-
     user = widget.user;
     loadUser();
     loadData();
-
     controller =
     AnimationController(vsync: this, duration: const Duration(seconds: 3))
       ..repeat(reverse: true);
@@ -60,13 +56,10 @@ class _HomePageState extends State<HomePage>
     controller.dispose();
     super.dispose();
   }
-
   Future<void> loadData() async {
     final data = await DatabaseService().getExpenses();
-
     double income = 0;
     double expense = 0;
-
     for (var e in data) {
       if (e.type.toLowerCase() == "income") {
         income += e.amount;
@@ -74,7 +67,6 @@ class _HomePageState extends State<HomePage>
         expense += e.amount;
       }
     }
-
     setState(() {
       allExpenses = data;
       filteredExpenses = data;
@@ -83,27 +75,22 @@ class _HomePageState extends State<HomePage>
       balance = income - expense;
     });
   }
-
   void deleteExpense(int id) async {
     await DatabaseService().deleteExpense(id);
     loadData();
   }
-
   void searchExpense(String query) {
     if (query.isEmpty) {
       setState(() => filteredExpenses = allExpenses);
       return;
     }
-
     final results = allExpenses.where((e) {
       return e.title.toLowerCase().contains(query.toLowerCase()) ||
           e.category.toLowerCase().contains(query.toLowerCase()) ||
           e.type.toLowerCase().contains(query.toLowerCase());
     }).toList();
-
     setState(() => filteredExpenses = results);
   }
-
   Widget premiumBalanceCard() {
     return AnimatedBuilder(
       animation: animation,
@@ -138,17 +125,13 @@ class _HomePageState extends State<HomePage>
 
                   const Text("Total Balance",
                       style: TextStyle(color: Colors.white70)),
-
                   const SizedBox(height: 10),
-
                   Text("₹ ${balance.toStringAsFixed(2)}",
                       style: const TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.bold,
                           color: Colors.white)),
-
                   const Spacer(),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -164,7 +147,6 @@ class _HomePageState extends State<HomePage>
       ),
     );
   }
-
   Widget _box(String title, double amount, Color color) {
     return Column(
       children: [
@@ -178,8 +160,6 @@ class _HomePageState extends State<HomePage>
       ],
     );
   }
-
-  /// UPDATED EXPENSE TILE (tap to edit)
   Widget expenseTile(Expense e) {
     bool isIncome = e.type.toLowerCase() == "income";
 
@@ -191,7 +171,6 @@ class _HomePageState extends State<HomePage>
             builder: (_) => EditExpensePage(expense: e),
           ),
         );
-
         if (result == true) {
           loadData();
         }
@@ -205,7 +184,6 @@ class _HomePageState extends State<HomePage>
         ),
         child: Row(
           children: [
-
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -219,9 +197,7 @@ class _HomePageState extends State<HomePage>
                       ? Colors.greenAccent
                       : Colors.redAccent),
             ),
-
             const SizedBox(width: 12),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,7 +212,6 @@ class _HomePageState extends State<HomePage>
                 ],
               ),
             ),
-
             Text(
               "${isIncome ? "+" : "-"} ₹${e.amount}",
               style: TextStyle(
@@ -256,14 +231,12 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff0B0F1A),
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 65,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Text(
               "Welcome ${user?['name'] ?? ''} 👋",
               style: const TextStyle(
@@ -271,7 +244,6 @@ class _HomePageState extends State<HomePage>
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
-
             CircleAvatar(
               radius: 20,
               backgroundImage:
@@ -285,12 +257,10 @@ class _HomePageState extends State<HomePage>
           ],
         ),
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
@@ -311,16 +281,13 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               ),
-
               premiumBalanceCard(),
-
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredExpenses.length,
                 itemBuilder: (c, i) => expenseTile(filteredExpenses[i]),
               ),
-
               const SizedBox(height: 100),
             ],
           ),
