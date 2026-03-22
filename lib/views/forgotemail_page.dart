@@ -13,20 +13,15 @@ class _ForgotEmailPageState extends State<ForgotEmailPage> {
   TextEditingController nameController = TextEditingController();
   String result = "";
   bool loading = false;
-
-  /// 🔥 FIND EMAIL FROM SHAREDPREFERENCES
   void findEmail() async {
 
     if(nameController.text.trim().isEmpty){
       setState(() => result = "Enter your name");
       return;
     }
-
     setState(()=>loading=true);
-
     var user = await DatabaseService()
         .findEmailByName(nameController.text.trim());
-
     if(user != null){
       setState(() {
         result = "Your email: ${user['email']}";
