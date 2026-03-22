@@ -4,7 +4,7 @@ class Expense {
   double amount;
   String category;
   String date;
-  String type; // income or expense
+  String type; 
 
   Expense({
     this.id,
