@@ -17,31 +17,24 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
-
   File? selectedImage;
-
-  /// PICK PROFILE IMAGE
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
-
     if (picked != null) {
       setState(() {
         selectedImage = File(picked.path);
       });
     }
   }
-
   void register() async {
     if (!_formKey.currentState!.validate()) return;
-
     bool success = await DatabaseService().registerUser(
       name.text.trim(),
       email.text.trim(),
       pass.text.trim(),
       selectedImage?.path ?? "",
     );
-
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Registered Successfully")));
@@ -51,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
           const SnackBar(content: Text("Email already registered")));
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,10 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _formKey,
               child: Column(
                 children: [
-
                   const SizedBox(height: 20),
-
-                  /// PROFILE IMAGE PICKER
                   GestureDetector(
                     onTap: pickImage,
                     child: CircleAvatar(
@@ -96,19 +85,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           : null,
                     ),
                   ),
-
                   const SizedBox(height: 30),
-
                   field("Name", name),
                   const SizedBox(height: 15),
-
                   field("Email", email),
                   const SizedBox(height: 15),
-
                   field("Password", pass, isPassword: true),
-
                   const SizedBox(height: 30),
-
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -119,7 +102,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: const Text("Register"),
                     ),
                   ),
-
                   SizedBox(
                     height: MediaQuery.of(context).viewInsets.bottom,
                   ),
@@ -131,7 +113,6 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
   Widget field(String hint, TextEditingController c,
       {bool isPassword = false}) {
     return TextFormField(
