@@ -14,8 +14,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   TextEditingController newPassController = TextEditingController();
 
   String result = "";
-
-  /// RESET PASSWORD
   void resetPassword() async {
 
     if(emailController.text.isEmpty || newPassController.text.isEmpty){
@@ -38,29 +36,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff020617),
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text("Reset Password"),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               const SizedBox(height: 30),
-
               const Text("Forgot Password",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold)),
-
               const SizedBox(height: 30),
-
-              /// EMAIL
               TextField(
                 controller: emailController,
                 style: const TextStyle(color: Colors.white),
@@ -74,10 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       borderRadius: BorderRadius.circular(15)),
                 ),
               ),
-
               const SizedBox(height: 15),
-
-              /// NEW PASSWORD
               TextField(
                 controller: newPassController,
                 obscureText: true,
@@ -106,9 +94,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       style: TextStyle(fontSize: 16)),
                 ),
               ),
-
               const SizedBox(height: 25),
-
               Text(result,
                   style: const TextStyle(
                       color: Colors.greenAccent,
